@@ -1,0 +1,13 @@
+services:
+  api:
+    build:
+      context: .
+    image: geoflood-api:local
+    ports:
+      - "8000:8000"
+    volumes:
+      - ./tests/data:/data:ro
+      - ./outputs:/app/outputs
+    environment:
+      GEOFLOOD_OUTPUT_DIR: /app/outputs
+    restart: unless-stopped

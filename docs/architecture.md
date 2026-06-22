@@ -1,0 +1,48 @@
+# Architecture
+
+## Component flow
+
+```mermaid
+flowchart TB
+    subgraph Interfaces
+        CLI["Typer CLI"]
+        API["FastAPI + Pydantic"]
+    end
+    subgraph Domain
+        Model["Flood-depth calculation"]
+        Service["Scenario service"]
+        Zonal["Zonal statistics"]
+    end
+    subgraph GeospatialIO["Geospatial I/O"]
+        Reader["Rasterio reader"]
+        Writer["Rasterio GeoTIFF writer"]
+        Vector["GeoPandas zone reader"]
+    end
+
+    CLI --> Service
+    API --> Service
+    Reader --> Service
+    Service --> Model
+    Model --> Writer
+    Writer --> Zonal
+    Vector --> Zonal
+```
+
+Both external interfaces delegate to `run_flood_scenario`, preventing the CLI
+and API from developing different scientific behavior.
+
+## Data contracts
+
+The raster layer accepts one single-band DEM. The output uses `float32`, DEFLATE
+compression, and the source nodata value. The API validates water-level bounds,
+GeoTIFF extensions, and output filenames before disk access.
+
+## Operational boundaries
+
+- A configurable cell-count limit protects the API from unexpectedly large
+  requests.
+- Output filenames cannot contain path separators.
+- The Docker image runs as an unprivileged user.
+- Test and demo datasets are deterministic and synthetic.
+- The platform is path-based by design; object storage and job queues are
+  plausible future extensions, not hidden dependencies.

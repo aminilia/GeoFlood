@@ -1,0 +1,21 @@
+site_name: GeoFlood CI/CD Platform
+site_description: Production-style geospatial flood-depth processing platform
+repo_name: geoflood-cicd-platform
+theme:
+  name: material
+  features:
+    - navigation.sections
+    - content.code.copy
+nav:
+  - Home: index.md
+  - Architecture: architecture.md
+  - CI/CD: ci_cd.md
+  - API: api.md
+markdown_extensions:
+  - admonition
+  - pymdownx.highlight
+  - pymdownx.superfences:
+      custom_fences:
+        - name: mermaid
+          class: mermaid
+          format: !!python/name:pymdownx.superfences.fence_code_format
