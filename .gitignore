@@ -20,7 +20,7 @@ venv/
 .vscode/
 
 # Generated project artifacts
-outputs/*
+#outputs/*
 !outputs/.gitkeep
 site/
 public/

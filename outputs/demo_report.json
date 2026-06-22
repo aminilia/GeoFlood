@@ -1,0 +1,11 @@
+{
+  "raster": "outputs\\demo_flood_depth.tif",
+  "crs": "EPSG:32618",
+  "width": 10,
+  "height": 10,
+  "valid_cell_count": 99,
+  "flooded_cell_count": 52,
+  "flooded_fraction": 0.5252525252525253,
+  "mean_depth": 0.8372207283973694,
+  "max_depth": 3.1393940448760986
+}
