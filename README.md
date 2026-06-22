@@ -206,6 +206,13 @@ docs/               MkDocs technical documentation
 outputs/            Ignored local and CI-generated products
 .gitlab-ci.yml      Validate-to-document delivery pipeline
 ```
+## Author
+
+**Amin Ilia**  
+Coastal / Geospatial / Scientific Software Engineer  
+GitHub: https://github.com/aminilia
+LinkedIn: https://www.linkedin.com/in/amin-ilia-phd-225b714/
+
 
 ## Documentation and license
 
