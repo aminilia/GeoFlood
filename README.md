@@ -216,6 +216,14 @@ GitHub: https://github.com/aminilia
 LinkedIn: https://www.linkedin.com/in/amin-ilia-phd-225b714/
 
 
+## Author
+
+**Amin Ilia**  
+Coastal / Geospatial / Scientific Software Engineer  
+GitHub: https://github.com/aminilia  
+LinkedIn: https://www.linkedin.com/in/amin-ilia-phd-225b714
+
+
 ## Documentation and license
 
 See [`docs/`](docs/) for architecture, API, and pipeline details. This project is released under the [MIT License](LICENSE).

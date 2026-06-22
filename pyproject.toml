@@ -4,12 +4,17 @@ build-backend = "hatchling.build"
 
 [project]
 name = "geoflood"
-version = "0.1.0"
+version = "0.1.1"
 description = "Production-style geospatial flood-depth processing platform"
 readme = "README.md"
-license = { file = "LICENSE" }
 requires-python = ">=3.11"
-authors = [{ name = "GeoFlood Contributors" }]
+authors = [
+    { name = "Amin Ilia" }
+]
+maintainers = [
+    { name = "Neelon Engineering Solutions, LLC" }
+]
+license = { text = "MIT" }
 keywords = ["flood", "geospatial", "raster", "fastapi", "ci-cd"]
 classifiers = [
     "Development Status :: 3 - Alpha",
