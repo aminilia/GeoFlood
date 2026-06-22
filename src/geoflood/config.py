@@ -49,3 +49,4 @@ class FloodScenarioResponse(BaseModel):
     flooded_cell_count: int
     max_depth: float
     mean_depth: float
+    warnings: list[str]

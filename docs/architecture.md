@@ -43,6 +43,10 @@ GeoTIFF extensions, and output filenames before disk access.
   requests.
 - Output filenames cannot contain path separators.
 - The Docker image runs as an unprivileged user.
-- Test and demo datasets are deterministic and synthetic.
+- Automated test datasets are deterministic and synthetic.
+- The real Norfolk demo is downloaded reproducibly from USGS 3DEP and includes
+  machine-readable provenance; CI tests do not depend on that network request.
+- Scenario reports preserve warnings for negative elevations, depth greater
+  than water level, missing CRS, and missing nodata metadata.
 - The platform is path-based by design; object storage and job queues are
   plausible future extensions, not hidden dependencies.

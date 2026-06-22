@@ -115,8 +115,7 @@ demo_run:
   stage: package
   script:
     - python scripts/generate_sample_data.py
-    - geoflood run --dem tests/data/sample_dem.tif --water-level 3.2 --output outputs/demo_flood_depth.tif --zones tests/data/sample_zones.geojson --summary outputs/demo_zonal_stats.csv
-    - python scripts/generate_report.py --raster outputs/demo_flood_depth.tif --output outputs/demo_report.json
+    - geoflood run --dem tests/data/sample_dem.tif --water-level 3.2 --output outputs/demo_flood_depth.tif --zones tests/data/sample_zones.geojson --summary outputs/demo_zonal_stats.csv --report outputs/demo_report.json
   artifacts:
     when: always
     expire_in: 1 week

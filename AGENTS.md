@@ -13,6 +13,8 @@ Maintain GeoFlood as a production-style scientific Python portfolio project. Fav
 - Never convert nodata pixels into valid flood depths.
 - Keep fixtures synthetic and small. Do not add external datasets or large
   binary files.
+- Preserve `data/norfolk_elizabeth_river_dem.json` provenance whenever the
+  small real USGS study-area DEM is regenerated.
 - Use type hints and docstrings for public functions.
 - Keep CLI and API behavior backed by the same processing functions.
 - Add or update tests whenever behavior changes.

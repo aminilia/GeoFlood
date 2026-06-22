@@ -5,6 +5,21 @@ demonstrates how a transparent scientific calculation can be packaged,
 validated, tested, containerized, scanned, and delivered as reproducible
 artifacts.
 
+## Featured study area
+
+The portfolio demo uses a real USGS 3DEP bare-earth DEM covering the Elizabeth
+River and Norfolk, Virginia. The clipped area spans approximately 8 by 9
+kilometers and includes tidal shoreline, river branches, and low-relief urban
+terrain. The download script records its source URL, extent, CRS, access date,
+and elevation range in a JSON provenance file.
+
+Synthetic data are retained for automated tests and CI reliability.
+
+The Norfolk source raster includes negative coastal/water elevations. GeoFlood
+therefore emits visible warnings when modeled depth exceeds the scenario water
+level. See [data quality and interpretation](data_quality.md) for vertical
+datum and land-mask guidance.
+
 ## Processing model
 
 For each valid DEM cell:
@@ -21,6 +36,7 @@ water-surface elevation is above the terrain cell.
     This is a static inundation screening model. It does not model flow
     connectivity, rainfall-runoff, velocity, levee failure, uncertainty, or
     real-time conditions and must not be treated as an operational forecast.
+    Water levels and DEM elevations must also use compatible vertical datums.
 
 ## Interfaces
 

@@ -1,11 +1,20 @@
 {
-  "raster": "outputs\\demo_flood_depth.tif",
+  "scenario_water_level_m": 3.2,
   "crs": "EPSG:32618",
   "width": 10,
   "height": 10,
+  "cell_size_x_m": 10.0,
+  "cell_size_y_m": 10.0,
   "valid_cell_count": 99,
   "flooded_cell_count": 52,
   "flooded_fraction": 0.5252525252525253,
-  "mean_depth": 0.8372207283973694,
-  "max_depth": 3.1393940448760986
+  "flooded_area_m2": 5200.0,
+  "mean_depth_all_cells_m": 0.8372207283973694,
+  "mean_depth_flooded_cells_m": 1.5939394235610962,
+  "max_depth_m": 3.1393940448760986,
+  "min_dem_elevation_m": 0.06060606241226196,
+  "max_dem_elevation_m": 6.0,
+  "min_flooded_dem_elevation_m": 0.06060606241226196,
+  "max_flooded_dem_elevation_m": 3.151515245437622,
+  "warnings": []
 }

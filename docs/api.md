@@ -38,7 +38,8 @@ Response:
   "valid_cell_count": 99,
   "flooded_cell_count": 52,
   "max_depth": 3.139394,
-  "mean_depth": 0.842118
+  "mean_depth": 0.842118,
+  "warnings": []
 }
 ```
 

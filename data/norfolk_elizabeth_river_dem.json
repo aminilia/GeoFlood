@@ -1,0 +1,30 @@
+{
+  "study_area": {
+    "name": "Elizabeth River and Norfolk, Virginia",
+    "bbox_wgs84": [
+      -76.31,
+      36.8,
+      -76.23,
+      36.88
+    ],
+    "output_crs": "EPSG:32618",
+    "width": 900,
+    "height": 900
+  },
+  "source": "USGS National Map 3D Elevation Program (3DEP)",
+  "source_service": "https://elevation.nationalmap.gov/arcgis/rest/services/3DEPElevation/ImageServer",
+  "download_url": "https://elevation.nationalmap.gov/arcgis/rest/services/3DEPElevation/ImageServer/exportImage?bbox=-76.31%2C36.8%2C-76.23%2C36.88&bboxSR=4326&imageSR=32618&size=900%2C900&format=tiff&pixelType=F32&interpolation=RSP_BilinearInterpolation&noData=-9999&f=image",
+  "accessed": "2026-06-22",
+  "license": "Public domain; free of charge and without use restrictions",
+  "vertical_units": "meters",
+  "vertical_datum": null,
+  "raster": {
+    "path": "data\\norfolk_elizabeth_river_dem.tif",
+    "crs": "EPSG:32618",
+    "width": 900,
+    "height": 900,
+    "nodata": -9999.0,
+    "minimum_elevation": -7.211727619171143,
+    "maximum_elevation": 21.01040267944336
+  }
+}

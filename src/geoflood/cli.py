@@ -7,6 +7,7 @@ import typer
 
 from geoflood import __version__
 from geoflood.flood_depth import run_flood_scenario
+from geoflood.reporting import write_scenario_report
 from geoflood.zonal_stats import write_zonal_stats
 
 app = typer.Typer(
@@ -30,7 +31,7 @@ def main(
         typer.Option("--version", callback=version_callback, is_eager=True),
     ] = None,
 ) -> None:
-    """Run synthetic, static water-level flood scenarios."""
+    """Run static water-level flood scenarios."""
 
 
 @app.command()
@@ -68,6 +69,20 @@ def run(
         Path | None,
         typer.Option("--summary", help="CSV destination when --zones is supplied."),
     ] = None,
+    report: Annotated[
+        Path | None,
+        typer.Option("--report", help="Optional JSON scenario quality report."),
+    ] = None,
+    provenance: Annotated[
+        Path | None,
+        typer.Option(
+            "--provenance",
+            exists=True,
+            file_okay=True,
+            dir_okay=False,
+            help="Optional DEM provenance JSON; same-stem JSON is auto-detected.",
+        ),
+    ] = None,
 ) -> None:
     """Create a flood-depth raster and optional polygon summary."""
     if (zones is None) != (summary is None):
@@ -77,6 +92,14 @@ def run(
         result = run_flood_scenario(dem, water_level, output)
         if zones is not None and summary is not None:
             write_zonal_stats(result.output_path, zones, summary)
+        if report is not None:
+            write_scenario_report(
+                dem,
+                result.output_path,
+                water_level,
+                report,
+                provenance,
+            )
     except (FileNotFoundError, ValueError, OSError) as exc:
         typer.echo(f"Error: {exc}", err=True)
         raise typer.Exit(code=1) from exc
@@ -88,6 +111,14 @@ def run(
     )
     if summary is not None:
         typer.echo(f"Zonal summary: {summary.resolve()}")
+    if report is not None:
+        typer.echo(f"Scenario report: {report.resolve()}")
+    if result.warnings:
+        typer.echo("", err=True)
+        typer.echo("=== GEOFLOOD DATA QUALITY WARNINGS ===", err=True)
+        for warning in result.warnings:
+            typer.echo(f"- WARNING: {warning}", err=True)
+        typer.echo("======================================", err=True)
 
 
 if __name__ == "__main__":

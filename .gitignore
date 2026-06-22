@@ -22,8 +22,8 @@ venv/
 # Generated project artifacts
 #outputs/*
 !outputs/.gitkeep
-site/
-public/
+#site/
+#public/
 
 # Geospatial sidecars and large local data
 *.aux.xml
@@ -31,6 +31,7 @@ public/
 *.tif
 *.tiff
 !tests/data/sample_dem.tif
+!data/norfolk_elizabeth_river_dem.tif
 
 # OS
 .DS_Store

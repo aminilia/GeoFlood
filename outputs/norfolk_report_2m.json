@@ -1,0 +1,46 @@
+{
+  "location_name": "Elizabeth River and Norfolk, Virginia",
+  "dem_source": "USGS National Map 3D Elevation Program (3DEP)",
+  "dem_source_url": "https://elevation.nationalmap.gov/arcgis/rest/services/3DEPElevation/ImageServer/exportImage?bbox=-76.31%2C36.8%2C-76.23%2C36.88&bboxSR=4326&imageSR=32618&size=900%2C900&format=tiff&pixelType=F32&interpolation=RSP_BilinearInterpolation&noData=-9999&f=image",
+  "dem_download_date": "2026-06-22",
+  "vertical_datum": null,
+  "scenario_water_level_m": 2.0,
+  "crs": "EPSG:32618",
+  "horizontal_crs": "EPSG:32618",
+  "bbox_projected": [
+    382274.66788520163,
+    4073391.690428345,
+    391244.52794421476,
+    4082361.550487358
+  ],
+  "bbox_lonlat": [
+    -76.32100410664094,
+    36.79903933336177,
+    -76.21909026558917,
+    36.88095431710613
+  ],
+  "width": 900,
+  "height": 900,
+  "cell_size_x_m": 9.96651117668125,
+  "cell_size_y_m": 9.96651117668125,
+  "valid_cell_count": 810000,
+  "flooded_cell_count": 203091,
+  "flooded_fraction": 0.25072962962962964,
+  "total_area_m2": 80458389.47827895,
+  "total_area_km2": 80.45838947827895,
+  "flooded_area_m2": 20173302.19448537,
+  "flooded_area_km2": 20.17330219448537,
+  "flooded_area_acres": 4984.931534220711,
+  "estimated_flood_volume_m3": 32740791.416936804,
+  "mean_depth_all_cells_m": 0.40692824125289917,
+  "mean_depth_flooded_cells_m": 1.622976303100586,
+  "max_depth_m": 9.211727142333984,
+  "min_dem_elevation_m": -7.211727619171143,
+  "max_dem_elevation_m": 21.01040267944336,
+  "min_flooded_dem_elevation_m": -7.211727619171143,
+  "max_flooded_dem_elevation_m": 1.999998688697815,
+  "warnings": [
+    "DEM contains elevations below -1.0 m (minimum -7.212 m). Coastal water, bathymetry, or a vertical-datum difference may inflate flood depth.",
+    "Maximum flood depth (9.212 m) exceeds the scenario water level (2.000 m). This indicates negative DEM elevations, unmasked water/bathymetry cells, or a vertical-datum mismatch."
+  ]
+}
