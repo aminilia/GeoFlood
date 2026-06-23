@@ -3,7 +3,8 @@
 from pathlib import Path
 
 import pytest
-from scripts.generate_sample_data import generate_sample_data
+
+from geoflood.sample_data import generate_sample_data
 
 
 @pytest.fixture(scope="session")
