@@ -43,8 +43,13 @@ tests:
   extends: .python-job
   stage: test
   script:
+    - pwd
+    - ls -la
+    - mkdir -p tests/data outputs
     - python scripts/generate_sample_data.py
-    - pytest --cov=geoflood --cov-report=xml --cov-report=term-missing --junitxml=junit.xml
+    - pytest --basetemp=.pytest_tmp --cov=geoflood --cov-report=term-missing --cov-report=xml:coverage.xml --junitxml=junit.xml
+    - ls -la coverage.xml junit.xml
+  coverage: '/TOTAL\s+\d+\s+\d+\s+\d+\s+\d+\s+(\d+)%/'
   artifacts:
     when: always
     expire_in: 1 week
