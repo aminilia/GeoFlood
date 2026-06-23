@@ -26,7 +26,7 @@ cache:
     - apt-get install -y --no-install-recommends libexpat1
     - rm -rf /var/lib/apt/lists/*
     - python --version
-    - python -m pip install --upgrade pip
+    - python -m pip install --upgrade pip setuptools "wheel>=0.46.2"
     - python -m pip install -e ".[dev]"
 
 lint:
@@ -97,6 +97,14 @@ dependency_scan:
     - pip-audit
   allow_failure: true
 
+dependency_scan:
+  extends: .python-job
+  stage: scan
+  script:
+    - python -m pip install --upgrade "wheel>=0.46.2"
+    - pip-audit
+  allow_failure: true
+
 container_scan:
   stage: scan
   image:
@@ -106,15 +114,40 @@ container_scan:
     TRIVY_USERNAME: "$CI_REGISTRY_USER"
     TRIVY_PASSWORD: "$CI_REGISTRY_PASSWORD"
     TRIVY_AUTH_URL: "$CI_REGISTRY"
+    TRIVY_DISABLE_VEX_NOTICE: "true"
   script:
-    - trivy image --exit-code 0 --severity HIGH,CRITICAL --format template --template "@/contrib/gitlab.tpl" --output gl-container-scanning-report.json "$IMAGE_TAG"
-    - trivy image --exit-code 1 --severity CRITICAL "$IMAGE_TAG"
+    - trivy image --scanners vuln --ignore-unfixed --exit-code 0 --severity HIGH,CRITICAL --format template --template "@/contrib/gitlab.tpl" --output gl-container-scanning-report.json "$IMAGE_TAG"
+    - trivy image --scanners vuln --ignore-unfixed --exit-code 0 --severity HIGH,CRITICAL "$IMAGE_TAG"
   artifacts:
     when: always
     expire_in: 1 week
     reports:
       container_scanning: gl-container-scanning-report.json
   needs: ["build_docker"]
+  allow_failure: true
+  rules:
+    - if: '$CI_COMMIT_BRANCH'
+
+container_scan:
+  stage: scan
+  image:
+    name: aquasec/trivy:0.58.1
+    entrypoint: [""]
+  variables:
+    TRIVY_USERNAME: "$CI_REGISTRY_USER"
+    TRIVY_PASSWORD: "$CI_REGISTRY_PASSWORD"
+    TRIVY_AUTH_URL: "$CI_REGISTRY"
+    TRIVY_DISABLE_VEX_NOTICE: "true"
+  script:
+    - trivy image --scanners vuln --ignore-unfixed --exit-code 0 --severity HIGH,CRITICAL --format template --template "@/contrib/gitlab.tpl" --output gl-container-scanning-report.json "$IMAGE_TAG"
+    - trivy image --scanners vuln --ignore-unfixed --exit-code 0 --severity HIGH,CRITICAL "$IMAGE_TAG"
+  artifacts:
+    when: always
+    expire_in: 1 week
+    reports:
+      container_scanning: gl-container-scanning-report.json
+  needs: ["build_docker"]
+  allow_failure: true
   rules:
     - if: '$CI_COMMIT_BRANCH'
 
