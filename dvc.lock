@@ -1,0 +1,47 @@
+schema: '2.0'
+stages:
+  features_norfolk:
+    cmd: geoflood features --dem data/norfolk_elizabeth_river_dem.tif 
+      --output-dir outputs/features/norfolk --water-threshold 0.0 
+      --reference-level 0.0 --scenario-level 1.0 --scenario-level 2.0 
+      --stream-threshold 200
+    deps:
+    - path: data/norfolk_elizabeth_river_dem.json
+      hash: md5
+      md5: 5f5b05fa88b793599b79203a0115a712
+      size: 1073
+    - path: data/norfolk_elizabeth_river_dem.tif
+      hash: md5
+      md5: 0cd544e9ddbc1ea1e039364cd36f59a0
+      size: 4195954
+    - path: src/geoflood/features
+      hash: md5
+      md5: c1d0f9c688ad1440d212ec6ba5136d0d.dir
+      size: 26111
+      nfiles: 5
+    - path: src/geoflood/raster.py
+      hash: md5
+      md5: ca1e6e1ae63c50f3cd9aa71d4d391d29
+      size: 2372
+    params:
+      params.yaml:
+        norfolk:
+          dem: data/norfolk_elizabeth_river_dem.tif
+          water_threshold: 0.0
+          reference_level: 0.0
+          scenario_level_low: 1.0
+          scenario_level_high: 2.0
+          stream_threshold: 200
+    outs:
+    - path: outputs/features/norfolk/features.json
+      hash: md5
+      md5: aa92f93e5bdef119ac462405b0d7cfdc
+      size: 4099
+    - path: outputs/features/norfolk/features.parquet
+      hash: md5
+      md5: 6db91ce21070a5d48e404396b2b9e4cc
+      size: 28984132
+    - path: outputs/features/norfolk/features.tif
+      hash: md5
+      md5: 0590309e46aab101fd7dfc89d2bd85c3
+      size: 25897214

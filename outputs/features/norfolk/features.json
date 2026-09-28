@@ -1,0 +1,141 @@
+{
+  "generator": "geoflood 0.2.0.dev0",
+  "created_utc": "2026-09-28T14:17:07+00:00",
+  "source_dem": "data/norfolk_elizabeth_river_dem.tif",
+  "crs": "EPSG:32618",
+  "vertical_datum": null,
+  "cell_size": [
+    9.96651117668125,
+    9.96651117668125
+  ],
+  "shape": [
+    900,
+    900
+  ],
+  "valid_cells": 810000,
+  "config": {
+    "reference_level": 0.0,
+    "scenario_levels": [
+      1.0,
+      2.0
+    ],
+    "water_threshold": 0.0,
+    "stream_threshold_cells": 200,
+    "relief_window": 5,
+    "fill_epsilon": 0.0001,
+    "vertical_datum": null
+  },
+  "features": {
+    "elevation": {
+      "description": "DEM elevation (DEM vertical datum and units)",
+      "count": 810000,
+      "min": -7.2117,
+      "mean": 2.8062,
+      "max": 21.0104
+    },
+    "elev_above_reference": {
+      "description": "Elevation minus the configured reference level",
+      "count": 810000,
+      "min": -7.2117,
+      "mean": 2.8062,
+      "max": 21.0104
+    },
+    "slope_deg": {
+      "description": "Slope in degrees (central differences)",
+      "count": 810000,
+      "min": 0.0,
+      "mean": 1.2927,
+      "max": 37.5091
+    },
+    "local_relief": {
+      "description": "Max minus min elevation in the relief window",
+      "count": 810000,
+      "min": 0.0,
+      "mean": 1.0424,
+      "max": 16.9575
+    },
+    "log_flow_accumulation": {
+      "description": "ln(1 + upstream D8 cell count)",
+      "count": 810000,
+      "min": 0.6931,
+      "mean": 1.5583,
+      "max": 10.6767
+    },
+    "twi": {
+      "description": "Topographic wetness index ln(a / tan(beta))",
+      "count": 810000,
+      "min": 2.5788,
+      "mean": 7.9712,
+      "max": 19.8836
+    },
+    "hand": {
+      "description": "Height above nearest drainage (may be negative in depressions)",
+      "count": 796514,
+      "min": -3.075,
+      "mean": 0.8685,
+      "max": 20.736
+    },
+    "distance_to_water": {
+      "description": "Distance to nearest open-water cell (map units)",
+      "count": 810000,
+      "min": 0.0,
+      "mean": 503.6058,
+      "max": 2472.1971
+    },
+    "is_water": {
+      "description": "1 where the cell is in the open-water mask",
+      "count": 810000,
+      "min": 0.0,
+      "mean": 0.1138,
+      "max": 1.0
+    },
+    "connected_depth_1m": {
+      "description": "Connected-bathtub depth on land for a static 1 m water level; 0 on open water and where not connected to a source",
+      "count": 810000,
+      "min": 0.0,
+      "mean": 0.0345,
+      "max": 1.0
+    },
+    "connected_depth_2m": {
+      "description": "Connected-bathtub depth on land for a static 2 m water level; 0 on open water and where not connected to a source",
+      "count": 810000,
+      "min": 0.0,
+      "mean": 0.1093,
+      "max": 2.0
+    }
+  },
+  "warnings": [
+    "Vertical datum unknown: elevation-based features and scenario levels cannot be compared with tidal datums until it is set.",
+    "13486 cells never reach drainage; HAND is NaN there."
+  ],
+  "source_provenance": {
+    "study_area": {
+      "name": "Elizabeth River and Norfolk, Virginia",
+      "bbox_wgs84": [
+        -76.31,
+        36.8,
+        -76.23,
+        36.88
+      ],
+      "output_crs": "EPSG:32618",
+      "width": 900,
+      "height": 900
+    },
+    "source": "USGS National Map 3D Elevation Program (3DEP)",
+    "source_service": "https://elevation.nationalmap.gov/arcgis/rest/services/3DEPElevation/ImageServer",
+    "download_url": "https://elevation.nationalmap.gov/arcgis/rest/services/3DEPElevation/ImageServer/exportImage?bbox=-76.31%2C36.8%2C-76.23%2C36.88&bboxSR=4326&imageSR=32618&size=900%2C900&format=tiff&pixelType=F32&interpolation=RSP_BilinearInterpolation&noData=-9999&f=image",
+    "accessed": "2026-06-22",
+    "license": "Public domain; free of charge and without use restrictions",
+    "vertical_units": "meters",
+    "vertical_datum": null,
+    "raster": {
+      "path": "data\\norfolk_elizabeth_river_dem.tif",
+      "crs": "EPSG:32618",
+      "width": 900,
+      "height": 900,
+      "nodata": -9999.0,
+      "minimum_elevation": -7.211727619171143,
+      "maximum_elevation": 21.01040267944336
+    }
+  }
+}

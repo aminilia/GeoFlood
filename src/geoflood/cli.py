@@ -121,5 +121,87 @@ def run(
         typer.echo("======================================", err=True)
 
 
+@app.command()
+def features(
+    dem: Annotated[
+        Path,
+        typer.Option(
+            "--dem",
+            exists=True,
+            file_okay=True,
+            dir_okay=False,
+            readable=True,
+            help="Input single-band DEM GeoTIFF in a projected CRS.",
+        ),
+    ],
+    output_dir: Annotated[
+        Path,
+        typer.Option("--output-dir", help="Directory for features.tif/.parquet/.json."),
+    ],
+    water_threshold: Annotated[
+        float | None,
+        typer.Option(
+            "--water-threshold",
+            help="Cells at or below this elevation are treated as open water.",
+        ),
+    ] = None,
+    reference_level: Annotated[
+        float,
+        typer.Option(
+            "--reference-level",
+            help="Reference water level (e.g. MHHW) in the DEM's vertical datum.",
+        ),
+    ] = 0.0,
+    scenario_level: Annotated[
+        list[float] | None,
+        typer.Option(
+            "--scenario-level",
+            help="Static water level for a connected-depth feature; repeatable.",
+        ),
+    ] = None,
+    stream_threshold: Annotated[
+        int,
+        typer.Option(
+            "--stream-threshold", min=1, help="Upstream cells that define a channel."
+        ),
+    ] = 200,
+    vertical_datum: Annotated[
+        str | None,
+        typer.Option(
+            "--vertical-datum",
+            help="Declared DEM vertical datum (e.g. NAVD88); recorded, not inferred.",
+        ),
+    ] = None,
+    provenance: Annotated[
+        Path | None,
+        typer.Option(
+            "--provenance",
+            exists=True,
+            file_okay=True,
+            dir_okay=False,
+            help="Optional DEM provenance JSON; same-stem JSON is auto-detected.",
+        ),
+    ] = None,
+) -> None:
+    """Generate terrain, hydrology, and coastal features from a DEM."""
+    from geoflood.features.stack import FeatureConfig, generate_features
+
+    config = FeatureConfig(
+        reference_level=reference_level,
+        scenario_levels=tuple(scenario_level) if scenario_level else (1.0, 2.0),
+        water_threshold=water_threshold,
+        stream_threshold_cells=stream_threshold,
+        vertical_datum=vertical_datum,
+    )
+    try:
+        outputs = generate_features(dem, output_dir, config, provenance_path=provenance)
+    except (FileNotFoundError, ValueError, OSError) as exc:
+        typer.echo(f"Error: {exc}", err=True)
+        raise typer.Exit(code=1) from exc
+
+    for kind, path in outputs.items():
+        typer.echo(f"Created {kind}: {path}")
+
+
 if __name__ == "__main__":
     app()

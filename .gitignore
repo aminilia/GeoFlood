@@ -24,8 +24,10 @@ venv/
 # Generated project artifacts
 #outputs/*
 !outputs/.gitkeep
-#site/
-#public/
+site/
+public/
+/.dvc/cache
+/.dvc/tmp
 
 # Geospatial sidecars and large local data
 *.aux.xml

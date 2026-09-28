@@ -10,6 +10,7 @@ nav:
   - Home: index.md
   - Architecture: architecture.md
   - Data quality: data_quality.md
+  - Feature pipeline: features.md
   - CI/CD: ci_cd.md
   - API: api.md
 markdown_extensions:

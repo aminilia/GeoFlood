@@ -13,6 +13,22 @@ synthetic data remain in the test suite so CI is deterministic and offline.
 The project is intentionally scoped as a transparent static inundation
 workflow—not a hydrodynamic or operational flood forecast. It demonstrates scientific Python engineering, raster data pipelines, testing, containers, documentation, and GitLab delivery practices.
 
+## GeoFlood v2 (in progress)
+
+v2 extends the engine into an AI flood-intelligence stack: a reproducible data
+pipeline and feature generation (Phase 1, started), a spatially validated
+flood-risk model with uncertainty, a cited retriever over NOAA/FEMA/USGS
+documents, a tool-using agent, deployment and monitoring, and a published
+benchmark. Phase 1 is usable now:
+
+```bash
+pip install -e ".[dev,pipeline]"
+dvc repro   # Norfolk terrain, hydrology, and coastal features
+```
+
+See [`docs/features.md`](docs/features.md) for the feature list, the
+connected-bathtub comparison, and known limitations.
+
 ## Architecture
 
 ```mermaid
@@ -206,16 +222,6 @@ docs/               MkDocs technical documentation
 outputs/            Ignored local and CI-generated products
 .gitlab-ci.yml      Validate-to-document delivery pipeline
 ```
-## Author
-
-**Amin Ilia**  
-Coastal / Geospatial / Scientific Software Engineer  
-
-GitHub: https://github.com/aminilia 
-
-LinkedIn: https://www.linkedin.com/in/amin-ilia-phd-225b714/
-
-
 ## Author
 
 **Amin Ilia**  

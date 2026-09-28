@@ -4,8 +4,8 @@ build-backend = "hatchling.build"
 
 [project]
 name = "geoflood"
-version = "0.1.1"
-description = "Production-style geospatial flood-depth processing platform"
+version = "0.2.0.dev0"
+description = "Geospatial flood-depth processing and flood-intelligence feature pipeline"
 readme = "README.md"
 requires-python = ">=3.11"
 authors = [
@@ -27,9 +27,11 @@ dependencies = [
     "geopandas>=1.0,<2",
     "numpy>=1.26,<3",
     "pandas>=2.2,<3",
+    "pyarrow>=15",
     "pydantic>=2.9,<3",
     "pydantic-settings>=2.6,<3",
     "rasterio>=1.4,<2",
+    "scipy>=1.11,<2",
     "shapely>=2.0,<3",
     "typer>=0.15,<1",
     "uvicorn[standard]>=0.32,<1",
@@ -48,6 +50,9 @@ dev = [
     "pytest-cov>=6,<8",
     "ruff>=0.8,<1",
     "wheel>=0.46.2",
+]
+pipeline = [
+    "dvc>=3.50,<4",
 ]
 
 [project.scripts]
@@ -74,7 +79,7 @@ strict = true
 files = ["src/geoflood"]
 warn_unused_ignores = true
 [[tool.mypy.overrides]]
-module = ["rasterio.*", "geopandas.*", "pandas.*", "shapely.*"]
+module = ["rasterio.*", "geopandas.*", "pandas.*", "shapely.*", "scipy.*"]
 ignore_missing_imports = true
 
 [tool.pytest.ini_options]

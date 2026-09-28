@@ -1,0 +1,12 @@
+# Parameters for the reproducible data pipeline (dvc.yaml).
+# Elevations and levels are in the DEM's vertical units (metres).
+norfolk:
+  dem: data/norfolk_elizabeth_river_dem.tif
+  # 3DEP flattens open water in this subset to about -0.67 m; cells at or
+  # below 0 m are treated as open water (drainage and inundation sources).
+  water_threshold: 0.0
+  # Placeholder until MHHW is converted to the DEM datum with VDatum.
+  reference_level: 0.0
+  scenario_level_low: 1.0
+  scenario_level_high: 2.0
+  stream_threshold: 200

@@ -107,3 +107,58 @@ def test_cli_prints_suspicious_depth_warning(tmp_path: Path) -> None:
     assert "WARNING:" in result.output
     assert "exceeds the scenario water level" in result.output
     assert report.exists()
+
+
+def test_cli_features_writes_products(
+    tmp_path: Path, sample_data: tuple[Path, Path]
+) -> None:
+    dem_path, _ = sample_data
+    output_dir = tmp_path / "features"
+
+    result = runner.invoke(
+        app,
+        [
+            "features",
+            "--dem",
+            str(dem_path),
+            "--output-dir",
+            str(output_dir),
+            "--water-threshold",
+            "0.5",
+            "--scenario-level",
+            "3.2",
+            "--stream-threshold",
+            "5",
+            "--vertical-datum",
+            "NAVD88",
+        ],
+    )
+
+    assert result.exit_code == 0, result.output
+    for name in ("features.tif", "features.parquet", "features.json"):
+        assert (output_dir / name).is_file()
+    with rasterio.open(output_dir / "features.tif") as dataset:
+        assert "connected_depth_3p2m" in dataset.descriptions
+
+
+def test_cli_features_rejects_geographic_dem(tmp_path: Path) -> None:
+    dem_path = tmp_path / "geographic.tif"
+    with rasterio.open(
+        dem_path,
+        "w",
+        driver="GTiff",
+        height=3,
+        width=3,
+        count=1,
+        dtype="float32",
+        crs="EPSG:4326",
+        transform=rasterio.transform.from_origin(-76.3, 36.9, 0.001, 0.001),
+    ) as dataset:
+        dataset.write(np.ones((3, 3), dtype=np.float32), 1)
+
+    result = runner.invoke(
+        app, ["features", "--dem", str(dem_path), "--output-dir", str(tmp_path)]
+    )
+
+    assert result.exit_code == 1
+    assert "projected CRS" in result.output

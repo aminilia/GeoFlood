@@ -2,7 +2,12 @@
 
 ## Mission
 
-Maintain GeoFlood as a production-style scientific Python portfolio project. Favor reproducibility, readable geospatial logic, and operational credibility over feature count.
+Maintain GeoFlood as a production-style scientific Python project. v1 is a
+static bathtub flood-depth engine; v2 ("AI Flood Intelligence") extends it with
+a reproducible data pipeline, terrain/hydrology features, a validated
+flood-risk model, a cited document retriever, and a tool-using agent. Favor
+reproducibility, readable geospatial logic, and operational credibility over
+feature count.
 
 ## Engineering rules
 
@@ -11,8 +16,12 @@ Maintain GeoFlood as a production-style scientific Python portfolio project. Fav
 - Put reusable code in `src/geoflood`; keep scripts thin.
 - Preserve raster CRS, transform, dimensions, and nodata metadata.
 - Never convert nodata pixels into valid flood depths.
-- Keep fixtures synthetic and small. Do not add external datasets or large
-  binary files.
+- Keep test fixtures synthetic and small. Real datasets enter only through the
+  DVC pipeline (`dvc.yaml`) with provenance; never commit large binaries to git.
+- Record horizontal CRS and vertical datum for every derived product. If the
+  vertical datum is unknown, say so in the output metadata; never infer it.
+- Feature functions in `src/geoflood/features/` are pure array-in/array-out
+  functions with unit tests on synthetic terrain whose answer is known.
 - Preserve `data/norfolk_elizabeth_river_dem.json` provenance whenever the
   small real USGS study-area DEM is regenerated.
 - Use type hints and docstrings for public functions.
@@ -30,6 +39,7 @@ black --check src tests scripts
 mypy src
 pytest --cov=geoflood --cov-report=term-missing
 mkdocs build --strict
+dvc repro --dry   # when pipeline stages change
 ```
 
 If dependencies are unavailable, report the exact failed command. Do not claim
@@ -37,12 +47,19 @@ checks passed unless they were run.
 
 ## CI/CD expectations
 
-Keep `.gitlab-ci.yml` stages ordered as validate, test, build, scan, package,
-and docs. Generated outputs should be artifacts with expiration policies.
+Keep CI stages ordered as validate, test, build, scan, package, and docs in
+both `.github/workflows/ci.yml` and `.gitlab-ci.yml` until one is retired. Generated outputs should be artifacts with expiration policies.
 Container jobs should use immutable or versioned images where practical.
 
 ## Scope discipline
 
-This model is a static water-surface-minus-terrain demonstration, not a
-hydrodynamic forecast. Documentation and API descriptions must not imply it
-models flow velocity, rainfall-runoff, uncertainty, or real-time hazards.
+- GeoFlood is not a hydrodynamic model or an operational forecast. Nothing in
+  code, docs, or API descriptions may imply real-time warning, flow velocity,
+  or rainfall-runoff simulation.
+- Bathtub and connected-bathtub outputs are static screening products; label
+  them as such.
+- Model outputs (v2 Phase 2 onward) may be described as probabilities only
+  when calibration has been measured on spatially held-out data, and the
+  metric is reported next to the claim.
+- Any number an LLM-based component returns must come from a tool result or a
+  cited document passage. The LLM does not compute numbers itself.

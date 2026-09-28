@@ -1,0 +1,25 @@
+stages:
+  features_norfolk:
+    desc: Terrain, hydrology, and coastal features for the Norfolk study area
+    cmd: >-
+      geoflood features
+      --dem ${norfolk.dem}
+      --output-dir outputs/features/norfolk
+      --water-threshold ${norfolk.water_threshold}
+      --reference-level ${norfolk.reference_level}
+      --scenario-level ${norfolk.scenario_level_low}
+      --scenario-level ${norfolk.scenario_level_high}
+      --stream-threshold ${norfolk.stream_threshold}
+    deps:
+      - ${norfolk.dem}
+      - data/norfolk_elizabeth_river_dem.json
+      - src/geoflood/features
+      - src/geoflood/raster.py
+    params:
+      - norfolk
+    outs:
+      - outputs/features/norfolk/features.tif
+      - outputs/features/norfolk/features.parquet
+    metrics:
+      - outputs/features/norfolk/features.json:
+          cache: false
