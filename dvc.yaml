@@ -23,3 +23,22 @@ stages:
     metrics:
       - outputs/features/norfolk/features.json:
           cache: false
+
+  labels_norfolk:
+    desc: FEMA NFHL flood-zone labels on the Norfolk DEM grid
+    # data/nfhl/norfolk_nfhl.* come from `python scripts/download_nfhl.py`
+    cmd: >-
+      geoflood labels
+      --dem ${norfolk.dem}
+      --zones data/nfhl/norfolk_nfhl.geojson
+      --output-dir outputs/labels/norfolk
+    deps:
+      - ${norfolk.dem}
+      - data/nfhl/norfolk_nfhl.geojson
+      - data/nfhl/norfolk_nfhl.json
+      - src/geoflood/labels
+    outs:
+      - outputs/labels/norfolk/labels.tif
+    metrics:
+      - outputs/labels/norfolk/labels.json:
+          cache: false

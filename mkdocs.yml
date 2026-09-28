@@ -11,6 +11,7 @@ nav:
   - Architecture: architecture.md
   - Data quality: data_quality.md
   - Feature pipeline: features.md
+  - Training labels: labels.md
   - CI/CD: ci_cd.md
   - API: api.md
 markdown_extensions:

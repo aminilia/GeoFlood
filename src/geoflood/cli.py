@@ -203,5 +203,48 @@ def features(
         typer.echo(f"Created {kind}: {path}")
 
 
+@app.command()
+def labels(
+    dem: Annotated[
+        Path,
+        typer.Option(
+            "--dem",
+            exists=True,
+            file_okay=True,
+            dir_okay=False,
+            help="DEM whose grid the labels are burned onto.",
+        ),
+    ],
+    zones: Annotated[
+        Path,
+        typer.Option(
+            "--zones",
+            exists=True,
+            file_okay=True,
+            dir_okay=False,
+            help="FEMA NFHL flood-hazard polygons (GeoJSON, GeoPackage, ...).",
+        ),
+    ],
+    output_dir: Annotated[
+        Path,
+        typer.Option("--output-dir", help="Directory for labels.tif and labels.json."),
+    ],
+) -> None:
+    """Rasterize FEMA NFHL flood zones onto a DEM grid as training labels."""
+    from geoflood.labels.fema import build_zone_labels, write_zone_labels
+
+    try:
+        zone_labels = build_zone_labels(dem, zones)
+        outputs = write_zone_labels(
+            zone_labels, output_dir, source_dem=dem, source_zones=zones
+        )
+    except (FileNotFoundError, ValueError, OSError) as exc:
+        typer.echo(f"Error: {exc}", err=True)
+        raise typer.Exit(code=1) from exc
+
+    for kind, path in outputs.items():
+        typer.echo(f"Created {kind}: {path}")
+
+
 if __name__ == "__main__":
     app()

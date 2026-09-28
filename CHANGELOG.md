@@ -16,6 +16,9 @@ this project uses [Semantic Versioning](https://semver.org/).
 - Added DVC pipeline (`dvc.yaml`, `params.yaml`, `dvc.lock`) for the Norfolk
   study area and a `pipeline` optional dependency group.
 - Added GitHub Actions CI mirroring the GitLab stage order.
+- Added FEMA NFHL flood-zone labels (`geoflood.labels.fema`, `geoflood labels`
+  CLI, `labels_norfolk` DVC stage) and `scripts/download_nfhl.py`, a
+  standard-library downloader that records DFIRM IDs and FIRM panel dates.
 - Rewrote AGENTS.md engineering and scope rules for v2.
 - Removed duplicate `dependency_scan` and `container_scan` job definitions from
   `.gitlab-ci.yml`, a duplicate README Author section, and the committed

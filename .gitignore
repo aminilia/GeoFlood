@@ -29,6 +29,9 @@ public/
 /.dvc/cache
 /.dvc/tmp
 
+# Downloaded source data (tracked by DVC, not git)
+data/nfhl/*.geojson
+
 # Geospatial sidecars and large local data
 *.aux.xml
 *.ovr
