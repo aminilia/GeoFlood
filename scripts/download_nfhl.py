@@ -20,6 +20,8 @@ from __future__ import annotations
 
 import argparse
 import json
+import time
+import urllib.error
 import urllib.parse
 import urllib.request
 from collections import Counter
@@ -35,6 +37,11 @@ ZONE_FIELDS = (
     "STATIC_BFE,V_DATUM,DEPTH,LEN_UNIT,SOURCE_CIT"
 )
 PAGE_SIZE = 1000
+# The NFHL server returns HTTP 500 for full-resolution geometry; generalizing
+# to ~1 m (1e-5 degrees), far below the 10 m label grid, makes queries succeed.
+MAX_ALLOWABLE_OFFSET_DEG = "0.00001"
+GEOMETRY_PRECISION = "7"
+RETRIES = 3
 DEFAULT_PROVENANCE = Path("data/norfolk_elizabeth_river_dem.json")
 
 
@@ -43,8 +50,16 @@ def _get_json(url: str, params: dict[str, str]) -> dict[str, Any]:
     request = urllib.request.Request(
         f"{url}?{query}", headers={"User-Agent": "geoflood-nfhl-download"}
     )
-    with urllib.request.urlopen(request, timeout=120) as response:
-        payload: dict[str, Any] = json.loads(response.read().decode("utf-8"))
+    for attempt in range(1, RETRIES + 1):
+        try:
+            with urllib.request.urlopen(request, timeout=180) as response:
+                payload: dict[str, Any] = json.loads(response.read().decode("utf-8"))
+            break
+        except urllib.error.HTTPError as exc:
+            if exc.code < 500 or attempt == RETRIES:
+                raise
+            print(f"NFHL server returned {exc.code}; retrying ({attempt}/{RETRIES})")
+            time.sleep(5 * attempt)
     if "error" in payload:
         raise RuntimeError(f"NFHL service error: {payload['error']}")
     return payload
@@ -72,6 +87,8 @@ def fetch_zones(bbox: tuple[float, float, float, float]) -> dict[str, Any]:
                 **_envelope(bbox),
                 "outFields": ZONE_FIELDS,
                 "outSR": "4326",
+                "maxAllowableOffset": MAX_ALLOWABLE_OFFSET_DEG,
+                "geometryPrecision": GEOMETRY_PRECISION,
                 "orderByFields": "OBJECTID",
                 "resultOffset": str(offset),
                 "resultRecordCount": str(PAGE_SIZE),
@@ -164,6 +181,7 @@ def main() -> None:
         ),
         "zone_counts": dict(sorted(zone_counts.items())),
         "firm_panels": panels,
+        "geometry_generalization_deg": float(MAX_ALLOWABLE_OFFSET_DEG),
         "license": "Public domain (U.S. federal government data)",
     }
 
